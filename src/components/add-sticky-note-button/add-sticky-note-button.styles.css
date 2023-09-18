@@ -1,0 +1,8 @@
+.add-sticky-note-button {
+    position: fixed;
+    bottom: var(--size-lg);
+    right: var(--size-lg);
+
+    border-radius: 100%;
+    background-color: var(--clr-primary)
+}

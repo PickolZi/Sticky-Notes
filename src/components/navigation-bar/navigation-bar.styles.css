@@ -1,0 +1,7 @@
+nav {
+    width: 100%;
+    height: var(--size-6xl);
+    background-color: var(--clr-primary);
+    display: flex;
+    flex-direction: row;
+}

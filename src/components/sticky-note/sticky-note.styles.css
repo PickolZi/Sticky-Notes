@@ -1,0 +1,6 @@
+.sticky-note-container {
+    display: flex;
+    padding: var(--size-lg);
+    flex-direction: column;
+    width: 300px;
+}
