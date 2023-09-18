@@ -8,7 +8,7 @@ const StickyNote = (props) => {
     return (
         <div key={id} className="sticky-note-container">
             <input type="text" value={title} name="title" data-id={id} onChange={inputEventHandler} />
-            <textarea rows="10" value={text} name="text" data-id={id} onChange={inputEventHandler}></textarea>
+            <textarea className="sticky-note__text-area" rows="10" value={text} name="text" data-id={id} onChange={inputEventHandler}></textarea>
         </div>
     );
 };

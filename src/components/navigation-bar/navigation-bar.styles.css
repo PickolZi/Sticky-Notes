@@ -4,4 +4,37 @@ nav {
     background-color: var(--clr-primary);
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+.nav__icon {
+    display: flex;
+}
+.nav__icon a {
+    display: flex;
+}
+.nav__icon-img {
+    width: var(--size-5xl);
+    height: var(--size-5xl);
+    margin: auto 0;
+    margin-left: var(--size-sm);
+    transition: all 0.3s ease-in-out;
+}
+.nav__icon-img:hover {
+    transform: translateY(-0.25em);
+}
+
+.nav__links {
+    display: flex;
+    flex-direction: row;
+    margin-right: var(--size-base);
+}
+.nav__link {
+    cursor: pointer;
+    margin-top: auto;
+    margin-bottom: auto;
+    /* transition: all 0.1s ease-in-out; */
+}
+
+.nav__link:hover {
+    color: white;
 }

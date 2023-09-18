@@ -4,3 +4,6 @@
     flex-direction: column;
     width: 300px;
 }
+.sticky-note__text-area {
+    resize: none;
+}
