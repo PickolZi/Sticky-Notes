@@ -1,35 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StickyNote from "../sticky-note/sticky-note.component";
 import AddStickyNoteButton from "../add-sticky-note-button/add-sticky-note-button.component";
 
+import { useContext } from 'react';
+import { userContext } from '../../contexts/userContext.context';
+import { stickyNotesContext } from '../../contexts/stickyNotesContext.context';
+
+import { getStickyNotesFromUser } from '../../utils/firebase/firebase.utils';
+
 import './sticky-notes-list.styles.css'
-
-const exampleStickyNotes = [
-    {
-      id: 1,
-      title: "Welcome to my sticky notes!",
-      text: "Hello and welcome to the beginning stages of my Sticky Notes web application! I hope this project takes off and is able to teach me many new things.",
-      date: new Date()
-    },
-    {
-      id: 2,
-      title: "Second sticky note",
-      text: "Here I want to add extra information so I can have multiple sticky notes when starting off.",
-      date: new Date()
-    },
-    {
-      id: 3,
-      title: "My hobbies",
-      text: "I used to play a lot of games including: Apex, Osu!, CSGO, payday2, and minecraft. However, after a while they all seemed to become boring and kind of pointless so now I am trying to do more productive things with my spare time.",
-      date: new Date()
-    },
-  ];
-
 
 
 const StickyNotesList = () => {
     // Given the sticky notes object filled with the title, text, and date. Display the sticky notes.
-    const [stickyNotes, setStickyNotes] = useState(exampleStickyNotes);
+    const [stickyNotes, setStickyNotes] = useState();
+    const { userCredentialsContext } = useContext(userContext);
+    const { stickyNotesJSON, setStickyNotesJSON } = useContext(stickyNotesContext);
+
+    useEffect(() => {
+      // When userCredentials change(user logs in or out) fetch the new sticky notes data from firestore.
+      const fetchStickyNotesFromFirestore = async () => {
+        try {
+          const stickyNotesJSON = await getStickyNotesFromUser(userCredentialsContext);
+          setStickyNotes(stickyNotesJSON);
+        } catch (error) {
+          console.log("Error grabbing sticky notes from firebase user.")
+          console.log(error);
+        }
+      };
+      fetchStickyNotesFromFirestore();
+    }, [userCredentialsContext]);
 
     // Creates eventHandler for each input field to update the data.
     const inputEventHandler = (event) => {
@@ -40,21 +40,23 @@ const StickyNotesList = () => {
         // Create and map through a new list of objects and replace the object with the target id.
         const newStickyNotes = stickyNotes.map((stickyNote) => {
             if (stickyNote.id == id) {
-                return {...stickyNote, [name]: value}
+              return {...stickyNote, [name]: value, updated: true};
             }
-
-            return stickyNote
-        });
-
-        // Updates state of stickyNotes
-        setStickyNotes(newStickyNotes);
+            return stickyNote;
+          });
+          
+          setStickyNotes(newStickyNotes);
+          setStickyNotesJSON(newStickyNotes);  // also updates stickyNotes context object.
     }
 
     return (
         <div className="sticky-notes-list__container">
-            {stickyNotes.map((stickyNote) => {
+            {stickyNotes ? 
+              stickyNotes.map((stickyNote) => {
                 return(<StickyNote data={stickyNote} inputEventHandler={inputEventHandler} />);
-            })};  
+              }) : 
+              ""
+            }
             <AddStickyNoteButton stickyNotes={stickyNotes} setStickyNotes={setStickyNotes}/>
         </div>
     );
