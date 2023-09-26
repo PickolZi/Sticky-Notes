@@ -38,3 +38,7 @@ nav {
 .nav__link:hover {
     color: white;
 }
+.nav__save-button {
+    margin-top: auto;
+    margin-bottom: auto;
+}

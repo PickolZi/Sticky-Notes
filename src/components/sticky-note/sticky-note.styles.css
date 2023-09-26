@@ -7,3 +7,14 @@
 .sticky-note__text-area {
     resize: none;
 }
+* {
+    /* outline: 1px solid red; */
+}
+.sticky-note__title-bar {
+    display: flex;
+    flex-direction: row;
+    /* outline: 1px solid green; */
+}
+.sticky-note-title {
+    width: 100%;
+}

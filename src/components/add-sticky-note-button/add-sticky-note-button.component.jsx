@@ -1,8 +1,14 @@
+import { useContext } from 'react';
+import { userContext } from '../../contexts/userContext.context'
+
+import { createEmptyStickyNoteInFirestore } from '../../utils/firebase/firebase.utils';
+
 import './add-sticky-note-button.styles.css';
 
 const AddStickyNoteButton = (props) => {
     // When clicked, will create a new sticky note.
     const {stickyNotes, setStickyNotes} = props;
+    const { userCredentialsContext, setUserCredentialsContext } = useContext(userContext);
     
     const handleNewStickyNote = () => {
         // Generates new sticky note when clicked.
@@ -16,6 +22,7 @@ const AddStickyNoteButton = (props) => {
             updated: true
         };
         setStickyNotes([...stickyNotes, newStickyNote]);
+        createEmptyStickyNoteInFirestore(userCredentialsContext, highestIdAvailable+1);
     };
 
     return (
