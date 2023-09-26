@@ -34,7 +34,6 @@ export const StickyNotesProvider = ({children}) => {
         }))
   
     }
-
     const value = {
         stickyNotesJSON, 
         setStickyNotesJSON, 
