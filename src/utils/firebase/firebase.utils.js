@@ -55,7 +55,7 @@ export const db = getFirestore(app);
 export const createUserDocumentFromAuth = async (userCredentials) => {
     if (!userCredentials) return;
     // When signing in through google. Fetch user firestore document. If user document does not exist, create one.
-    const {displayName, email} = userCredentials.user;
+    const {displayName, email, photoURL} = userCredentials.user;
     const userUID = userCredentials.user.uid;
 
     const userDocRef = doc(db, 'users', userUID);
@@ -64,8 +64,11 @@ export const createUserDocumentFromAuth = async (userCredentials) => {
         try {
             const data = {
                 displayName: displayName,
-                email: email
+                email: email,
+                id: parseInt(await getHighestUserIDFromFirestore())+1,
+                photoURL: photoURL
             };
+            await setHighestUserIDFromFirestore(parseInt(await getHighestUserIDFromFirestore())+1)
             return await setDoc(userDocRef, data);
         } catch (error) {
             console.log("Error creating user: ", error);
@@ -74,7 +77,9 @@ export const createUserDocumentFromAuth = async (userCredentials) => {
 
     return userSnapshot;
 }
-
+// //////////////////////
+// Sticky Notes functions
+// //////////////////////
 export const getStickyNotesFromUser = async (userCredentials) => {
     // Gets all of a user's sticky notes. Return empty list if none.
     if (!userCredentials) return;
@@ -133,4 +138,31 @@ export const createEmptyStickyNoteInFirestore = async (userCredentials, dataID) 
     const userUID = userCredentials.user.uid;
     const newStickyNotesDocRef = doc(db, `users/${userUID}/stickynotes`, dataID.toString());
     return await setDoc(newStickyNotesDocRef, {id:dataID, title:"", text:"", date:new Date()});
+}
+
+// ///////////////
+// Users functions
+// ///////////////
+
+export const getUsersFromFirestore = async () => {
+    // Grabs all available users from firestore, returns a list of their display names
+    const usersColRef = collection(db, 'users');
+    const usersDocsSnapshot = await (await getDocs(usersColRef)).docs
+    const usersData = usersDocsSnapshot.filter((user) => {return !user.data().highest_id})  // Returns all users except meta data user which holds the data for the current highest id.
+
+    return usersData
+}
+
+export const getHighestUserIDFromFirestore = async () => {
+    // Gets the current highest user id.
+    const userHighestIDDocRef = doc(db, 'users', 'CURRENT_TOP');
+    
+    return (await getDoc(userHighestIDDocRef)).data()['highest_id']
+}
+
+export const setHighestUserIDFromFirestore = async (newHighestID) => {
+    // sets the current highest user id.
+    const userHigehstIDDocRef = doc(db, 'users', 'CURRENT_TOP');
+
+    await setDoc(userHigehstIDDocRef, {highest_id: newHighestID})
 }

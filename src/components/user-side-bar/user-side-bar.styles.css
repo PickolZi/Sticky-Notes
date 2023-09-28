@@ -1,0 +1,17 @@
+.user-side-bar__container {
+    display: flex;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: var(--size-xxs);
+}
+.user-side-bar__img {
+    border-radius: 100%;
+    width: 64px;
+    border: 2px solid var(--clr-primary);
+}
+.user-side-bar__display-name {
+    display: inline;
+    height: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+}

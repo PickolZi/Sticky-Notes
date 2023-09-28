@@ -1,8 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { userContext } from '../../contexts/userContext.context'
 import { stickyNotesContext } from '../../contexts/stickyNotesContext.context';
+import { SideBarContext } from '../../contexts/sideBarContext.context';
 
 import { 
     signInWithGooglePopup, 
@@ -18,6 +19,7 @@ import iconSvg from '/assets/svgs/sticky-note-icon.svg'
 const NavigationBar = () => {
     const { userCredentialsContext, setUserCredentialsContext } = useContext(userContext);
     const { stickyNotesJSON, isStickyNoteChange, setStickyNoteChange } = useContext(stickyNotesContext);
+    const { showSideBar, setShowSideBar } = useContext(SideBarContext);
 
     const handleSignInWithGooglePopup = async () => {
         setUserCredentialsContext(await signInWithGooglePopup());
@@ -39,6 +41,10 @@ const NavigationBar = () => {
         });
     };
 
+    const toggleSideBar = () => {
+        setShowSideBar(!showSideBar);
+    }
+
     useEffect(() => {
         createUserDocumentFromAuth(userCredentialsContext);
     }, [userCredentialsContext]);
@@ -47,7 +53,7 @@ const NavigationBar = () => {
         <nav>
             <div className="nav__icon">
                 <Link to="/">
-                    <img className="nav__icon-img" src={iconSvg} alt="Sticky Note web page icon" />
+                    <img className="nav__icon-img" src={iconSvg} onClick={toggleSideBar} alt="Sticky Note web page icon" />
                 </Link>
             </div>
 

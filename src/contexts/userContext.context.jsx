@@ -8,15 +8,12 @@ export const userContext = createContext(
     }
 );
 
-
+// Helper functions
 const setUserSession = (userCredentialsContext) => {
     // Saves user's session into local storage.
     if (userCredentialsContext) {
-        console.log("Setting local user auth: ")
-        console.log(JSON.stringify(userCredentialsContext))
         localStorage.setItem('user-auth', JSON.stringify(userCredentialsContext))
     } else {
-        console.log("Removing user auth: ")
         localStorage.removeItem('user-auth')
     }
 }
@@ -24,7 +21,6 @@ const setUserSession = (userCredentialsContext) => {
 const getUserSession = (setUserCredentialsContext) => {
     // If old user session is still valid. Keep user logged in.
     let userLocalSession = localStorage.getItem('user-auth')
-    console.log("Got user session: ", userLocalSession)
     if (userLocalSession) {
         setUserCredentialsContext(JSON.parse(userLocalSession));
     }
@@ -40,7 +36,6 @@ export const UserProvider = ({children}) => {
     }, [])
 
     useEffect(() => {
-        // console.log("Something happened to the user.")
         setUserSession(userCredentialsContext);
     }, [userCredentialsContext]);
     

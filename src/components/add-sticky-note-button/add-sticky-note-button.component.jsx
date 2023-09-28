@@ -8,12 +8,15 @@ import './add-sticky-note-button.styles.css';
 const AddStickyNoteButton = (props) => {
     // When clicked, will create a new sticky note.
     const {stickyNotes, setStickyNotes} = props;
-    const { userCredentialsContext, setUserCredentialsContext } = useContext(userContext);
+    const { userCredentialsContext } = useContext(userContext);
     
     const handleNewStickyNote = () => {
         // Generates new sticky note when clicked.
         const highestIdAvailableArray = stickyNotes.map((stickyNote) => { return stickyNote.id});
-        const highestIdAvailable = Math.max(...highestIdAvailableArray);
+        let highestIdAvailable = 0
+        if (highestIdAvailableArray.length != 0) {
+            highestIdAvailable = Math.max(...highestIdAvailableArray);
+        } 
         const newStickyNote = {
             id: highestIdAvailable+1,
             title: "",

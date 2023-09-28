@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import { UserProvider } from './contexts/userContext.context.jsx'
 import { StickyNotesProvider } from './contexts/stickyNotesContext.context.jsx'
+import { SideBarProvider } from './contexts/sideBarContext.context.jsx'
 
 import '../styles/styles.css'
 
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <UserProvider>
         <StickyNotesProvider>
-          <App />
+          <SideBarProvider>
+            <App />
+          </SideBarProvider>
         </StickyNotesProvider>
       </UserProvider>
     </BrowserRouter>
