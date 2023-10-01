@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, useReducer } from 'react';
 
 import { userContext } from '../../contexts/userContext.context';
+import { SideBarContext } from '../../contexts/sideBarContext.context';
 
 import UserSideBar from '../user-side-bar/user-side-bar.component';
 
@@ -14,8 +15,13 @@ const UsersSideBarList = () => {
     const [username, setUsername] = useState("Guest");
     const [userEmail, setUserEmail] = useState("None");
 
-    // Current user
     const {userCredentialsContext} = useContext(userContext);
+    const {setShowSideBar} = useContext(SideBarContext);
+
+    const closeSideBar = () => {
+        console.log("closing side bar")
+        setShowSideBar(false);
+    }
 
     useEffect(() => {
         const getUsers = async () =>{
@@ -46,7 +52,7 @@ const UsersSideBarList = () => {
                 {users && users.map((user) => {
                     if (user.email!=userEmail) {
                         return (
-                            <UserSideBar key={user.id} user={user}/>
+                            <UserSideBar closeSideBar={closeSideBar} key={user.id} user={user}/>
                         )
                     };
                 })}

@@ -96,6 +96,27 @@ export const getStickyNotesFromUser = async (userCredentials) => {
     return [];
 }
 
+export const getStickyNotesByUserID = async (userID) => {
+    // Gets every user from getUserFromFirestore() then filters all but the selected userID. Returns userCredential.
+    const users = await getUsersFromFirestore().then((users) => {
+        return users.filter((user) => {
+            if (user.data().id == userID) {
+                return true
+            }
+            return false
+        });
+    })
+
+    // If there is no user by that id, return false.
+    if (users.length === 0) {
+        return false
+    }
+
+    const stickyNotesColRef = collection(db, `users/${users[0].id}/stickynotes`);
+    return await getDocs(stickyNotesColRef);
+}
+
+
 export const updateStickyNotesToFirestore = async (userCredentials, data) => {
     // Updates a user's sticky note.
     const userUID = userCredentials.user.uid;

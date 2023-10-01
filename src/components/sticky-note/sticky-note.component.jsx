@@ -13,7 +13,8 @@ const StickyNote = (props) => {
     // Fills and displays the stickynote with data.
     if (!props.data) return;
     const {id, title, text, date} = props.data;
-    const {inputEventHandler} = props;
+    const {permissions} = props;
+    const inputEventHandler = props.inputEventHandler ? props.inputEventHandler : () => {};
 
     const {userCredentialsContext} = useContext(userContext);
     const {removeStickyNoteFromLocalData} = useContext(stickyNotesContext);
@@ -30,10 +31,15 @@ const StickyNote = (props) => {
         <div key={id} className="sticky-note-container">
             <div className="sticky-note__title-bar">
                 <input className="sticky-note-title" type="text" value={title} name="title" data-id={id} onChange={inputEventHandler} />
-                <StickyNoteButton delete_button="delete_button" text="x" handler={deleteStickyNoteHandler} data_id={id}/>
+                {permissions.delete &&
+                    <StickyNoteButton delete_button="delete_button" text="x" handler={deleteStickyNoteHandler} data_id={id}/>
+                }
             </div>
-
-            <textarea className="sticky-note__text-area" rows="10" value={text} name="text" data-id={id} onChange={inputEventHandler}></textarea>
+            {permissions.edit ? 
+                <textarea className="sticky-note__text-area" rows="10" value={text} name="text" data-id={id} onChange={inputEventHandler}></textarea>
+                :
+                <textarea className="sticky-note__text-area" rows="10" value={text} name="text" data-id={id} readOnly></textarea>
+            }
         </div>
     );
 };

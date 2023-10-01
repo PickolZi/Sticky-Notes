@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 import { userContext } from '../../contexts/userContext.context'
 import { stickyNotesContext } from '../../contexts/stickyNotesContext.context';
@@ -50,24 +50,32 @@ const NavigationBar = () => {
     }, [userCredentialsContext]);
 
     return (
-        <nav>
-            <div className="nav__icon">
-                <Link to="/">
-                    <img className="nav__icon-img" src={iconSvg} onClick={toggleSideBar} alt="Sticky Note web page icon" />
-                </Link>
-            </div>
+        <>
+            <nav>
+                <div className='nav__left'>
+                    <div className="nav__icon">
+                        <Link to="/">
+                            <img className="nav__icon-img" src={iconSvg} alt="Sticky Note web page icon" />
+                        </Link>
+                    </div>
+                    <div className="nav__find-friends-button">
+                        <button onClick={toggleSideBar}>Find Friends</button>
+                    </div>
+                </div>
 
-            <div className='nav__save-button'>
-                {isStickyNoteChange && <button onClick={saveStickyNotesToFirestore}>Save</button>}
-            </div>
+                <div className='nav__save-button'>
+                    {isStickyNoteChange && <button onClick={saveStickyNotesToFirestore}>Save</button>}
+                </div>
 
-            <div className="nav__links">
-                {!userCredentialsContext ? 
-                    <span className="nav__link" onClick={handleSignInWithGooglePopup}>Sign In</span> : 
-                    <span className="nav__link" onClick={handleSignOut}>Sign Out</span>
-                }
-            </div>
-        </nav>
+                <div className="nav__links">
+                    {!userCredentialsContext ? 
+                        <span className="nav__link" onClick={handleSignInWithGooglePopup}>Sign In</span> : 
+                        <span className="nav__link" onClick={handleSignOut}>Sign Out</span>
+                    }
+                </div>
+            </nav>
+            <Outlet />
+        </>
     );
 };
 

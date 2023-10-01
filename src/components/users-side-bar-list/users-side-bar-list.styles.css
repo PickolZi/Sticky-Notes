@@ -1,28 +1,29 @@
 .users-side-bar-list__container {
     position: absolute;
-    top: 0;
+    top: var(--size-6xl);
     left: 0;
     background-color: white;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     border: 1px solid black;
 }
 .users-side-bar-list__main-user-container {
     height: var(--size-6xl);
     display: flex;
     font-size: var(--size-2xl);
-
 }
 .users-side-bar-list__main-user-display-name {
     display: inline-block;
     margin-top: auto;
     margin-bottom: auto;
 }
+.user-side-bar-list__close-side-bar {
+    display: flex;
+}
 
 .users-side-bar-list-users {
     display: flex;
     flex-direction: column;
-    /* gap: var(--size-xxs); */
 }
 
 /* xs */

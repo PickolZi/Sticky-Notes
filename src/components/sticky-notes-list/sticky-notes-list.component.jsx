@@ -12,7 +12,7 @@ import './sticky-notes-list.styles.css';
 const StickyNotesList = () => {
   // Displays all the sticky nots on the user's home page.
   const { userCredentialsContext } = useContext(userContext);
-  const { stickyNotesJSON, setStickyNotesJSON, updateLocalStickyNotes, isStickyNoteChange, setStickyNoteChange } = useContext(stickyNotesContext);
+  const { stickyNotesJSON, setStickyNotesJSON, updateLocalStickyNotes, setStickyNoteChange } = useContext(stickyNotesContext);
 
   useEffect(() => {
     updateLocalStickyNotes(userCredentialsContext);
@@ -35,10 +35,18 @@ const StickyNotesList = () => {
     setStickyNotesJSON(newStickyNotes);  // updates stickyNotes context.
   }
 
+  // User permissions to read/write/delete/edit
+  const permissions = {
+    read: true,
+    write: true,
+    delete: true,
+    edit: true
+  }
+
   return (
     <div className="sticky-notes-list__container">
         {stickyNotesJSON && stickyNotesJSON.map((stickyNote) => {
-          return (<StickyNote key={stickyNote.id} data={stickyNote} inputEventHandler={inputEventHandler} />);
+          return (<StickyNote key={stickyNote.id} data={stickyNote} permissions={permissions} inputEventHandler={inputEventHandler} />);
         })}
         
         <AddStickyNoteButton stickyNotes={stickyNotesJSON} setStickyNotes={setStickyNotesJSON}/>

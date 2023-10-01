@@ -6,6 +6,11 @@ nav {
     flex-direction: row;
     justify-content: space-between;
 }
+.nav__left {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-base);
+}
 .nav__icon {
     display: flex;
 }
@@ -32,11 +37,14 @@ nav {
     cursor: pointer;
     margin-top: auto;
     margin-bottom: auto;
-    /* transition: all 0.1s ease-in-out; */
 }
 
 .nav__link:hover {
     color: white;
+}
+.nav__find-friends-button {
+    margin-top: auto;
+    margin-bottom: auto;
 }
 .nav__save-button {
     margin-top: auto;

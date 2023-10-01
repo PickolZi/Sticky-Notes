@@ -1,12 +1,15 @@
+import { Link } from 'react-router-dom';
 
 import './user-side-bar.styles.css'
 
-const UserSideBar = ({user}) => { 
+const UserSideBar = ({closeSideBar, user}) => { 
     return (
-        <div className='user-side-bar__container'>
-            <img className="user-side-bar__img" src={user.photoURL} alt={`${user.displayName}'s photo`} />
-            <h3 className='user-side-bar__display-name'>{user.displayName}</h3>
-        </div>
+        <Link to={`/user/${user.id}`}>
+            <div className='user-side-bar__container' onClick={closeSideBar}>
+                <img className="user-side-bar__img" src={user.photoURL} alt={`${user.displayName}'s photo`} />
+                <h3 className='user-side-bar__display-name'>{user.displayName}</h3>
+            </div>
+        </Link>
     )
 }
 
