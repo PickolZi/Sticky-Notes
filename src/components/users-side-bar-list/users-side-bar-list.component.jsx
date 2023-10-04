@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, useReducer } from 'react';
+import { Link } from 'react-router-dom';
 
 import { userContext } from '../../contexts/userContext.context';
 import { SideBarContext } from '../../contexts/sideBarContext.context';
@@ -19,7 +20,6 @@ const UsersSideBarList = () => {
     const {setShowSideBar} = useContext(SideBarContext);
 
     const closeSideBar = () => {
-        console.log("closing side bar")
         setShowSideBar(false);
     }
 
@@ -45,7 +45,7 @@ const UsersSideBarList = () => {
     return (
         <div className="users-side-bar-list__container">
             <div className='users-side-bar-list__main-user-container'>
-                <h3 className='users-side-bar-list__main-user-display-name'>Hello {username}!</h3>
+                <h3 className='users-side-bar-list__main-user-display-name'>Hello <Link onClick={closeSideBar} to="/">{username}</Link>!</h3>
             </div>  
 
             <div className="users-side-bar-list-users">

@@ -26,6 +26,9 @@ const StickyNote = (props) => {
         deleteStickyNoteFromFirestore(userCredentialsContext, stickyNoteID);
         removeStickyNoteFromLocalData(stickyNoteID);
     };
+    let createdAt = new Date(date.seconds*1000).toUTCString().split(" ");
+    createdAt = createdAt[2] + " " + createdAt[1] +  ", " + createdAt[3]
+    createdAt = createdAt === "undefined Date, undefined" ? false : createdAt;
 
     return (
         <div key={id} className="sticky-note-container">
@@ -40,6 +43,8 @@ const StickyNote = (props) => {
                 :
                 <textarea className="sticky-note__text-area" rows="10" value={text} name="text" data-id={id} readOnly></textarea>
             }
+            {createdAt && <h4>Created: {createdAt}</h4>}
+            
         </div>
     );
 };

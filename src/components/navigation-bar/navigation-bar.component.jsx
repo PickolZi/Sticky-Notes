@@ -30,6 +30,10 @@ const NavigationBar = () => {
         setUserCredentialsContext(null);
     }
 
+    const closeSideBar = () => {
+        setShowSideBar(false);
+    }
+
     const saveStickyNotesToFirestore = () => {
         // When clicked, updates firestore database 
         stickyNotesJSON.map((stickyNoteJSON) => {
@@ -54,7 +58,7 @@ const NavigationBar = () => {
             <nav>
                 <div className='nav__left'>
                     <div className="nav__icon">
-                        <Link to="/">
+                        <Link to="/" onClick={closeSideBar}>
                             <img className="nav__icon-img" src={iconSvg} alt="Sticky Note web page icon" />
                         </Link>
                     </div>

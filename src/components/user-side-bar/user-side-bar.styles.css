@@ -3,6 +3,10 @@
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     padding: var(--size-xxs);
+    gap: var(--size-xxs);
+}
+.user-side-bar__container:hover {
+    background-color: var(--clr-primary);
 }
 .user-side-bar__img {
     border-radius: 100%;
