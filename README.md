@@ -1,6 +1,8 @@
 
 # Sticky Notes Web App
 
+[Live demo](https://sticky-notes-pickolzi.vercel.app/)
+
 ## Purpose
 The purpose of this web application is to be able to write down and keep track of your thoughts and ideas through sticky notes from anywhere! Ranging from your computer to your phone, it can be accessed anywhere as long as you have an internet connection.
 
